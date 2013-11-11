@@ -1,0 +1,47 @@
+# sensative config
+config/aws.yml
+
+*.gem
+*.rbc
+.bundle
+.config
+coverage
+InstalledFiles
+lib/bundler/man
+pkg
+rdoc
+spec/reports
+test/tmp
+test/version_tmp
+tmp
+log
+bin
+
+# YARD artifacts
+.yardoc
+_yardoc
+doc/
+
+# OS X artifacts
+.DS_Store
+
+# RubyMine / IdeaBrains
+.idea
+*.iml
+
+# Vim
+*.swp
+*.swo
+
+nohup.out
+
+# ctags
+.gemtags
+.tags
+.tags_sorted_by_file
+tags
+
+# PERSONAL
+.rdebugrc
+bundler_bin/
+

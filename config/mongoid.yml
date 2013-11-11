@@ -1,0 +1,27 @@
+common: &common
+  options:
+    allow_dynamic_fields: true
+
+test:
+  <<: *common
+  sessions:
+    default:
+      database: waitinglist-test
+      hosts:
+        - localhost:27017
+
+development:
+  <<: *common
+  sessions:
+    default:
+      database: waitinglist-development
+      hosts:
+        - localhost:27017
+
+production:
+  <<: *common
+  sessions:
+    default:
+      database: waitinglist-production
+      hosts:
+        - localhost:27017
