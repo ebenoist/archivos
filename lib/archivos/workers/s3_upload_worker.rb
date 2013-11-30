@@ -1,25 +1,19 @@
 require "archivos/api/models/media"
+require "archivos/s3_client"
 
 module Archivos
   class S3UploadWorker
     include Sidekiq::Worker
 
-    BUCKET_NAME = "primeproductions".freeze
-
     def perform(job)
-      id = job["id"]
-      order_code = job["order_code"]
-      file = job["file"]
-      file_name = job["file_name"]
+      object = S3Client.upload_file!(job["file"], calculate_file_name(job))
 
-      bucket = connection.buckets.create(BUCKET_NAME)
-
-      file = Pathname.new(file)
-      object = bucket.create("#{order_code}_#{file_name}", file)
-
-      debugger
-      media = Media.find(id)
+      media = Media.find(job["id"])
       media.update_attributes({ public_uri: object.public_uri.to_s })
+    end
+
+    def calculate_file_name(job)
+      "#{job["order_code"]}_#{job["file_name"]}"
     end
 
     def connection

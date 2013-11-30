@@ -7,10 +7,6 @@ GEM
     activesupport (3.2.15)
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
-    aws-s3 (0.6.3)
-      builder
-      mime-types
-      xml-simple
     aws-sdk (1.25.0)
       json (~> 1.4)
       nokogiri (>= 1.4.4, < 1.6.0)
@@ -42,7 +38,6 @@ GEM
     json (1.8.1)
     macaddr (1.6.1)
       systemu (~> 2.5.0)
-    mime-types (2.0)
     mongoid (3.0.23)
       activemodel (~> 3.1)
       moped (~> 1.2)
@@ -110,13 +105,11 @@ GEM
     uuid (2.3.7)
       macaddr (~> 1.0)
     uuidtools (2.1.4)
-    xml-simple (1.1.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  aws-s3
   aws-sdk
   bson_ext
   bundler
