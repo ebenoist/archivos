@@ -32,7 +32,7 @@ module Archivos
 
     it "adds the public uri to the media object after uploading" do
       uri = URI("http://amazonsupr.internet.com/my-pixs.jpg")
-      s3_object = double(:s3_object, {public_url: uri})
+      s3_object = double(:s3_object, { public_url: uri })
       S3Client.stub(:upload_file!).and_return(s3_object)
 
       S3UploadWorker.perform_async(@job_description)
