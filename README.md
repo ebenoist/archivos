@@ -6,6 +6,11 @@ Files are uploaded to the primary server which fires off a series of concurrent 
 
 Provided is a simple UI, but an API allows for access via any client over HTTP.
 
+### Requirements
+* Ruby >= 1.9.3
+* Redis
+* Bundler
+
 ### Todo
 1. Transition to Postgres.
 2. Lots of cleaning.
