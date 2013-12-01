@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>archivos</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div id="wrap">
+
+      <div class="container">
+        <div class="page-header">
+          <h1>Archivos</h1>
+        </div>
+        <p class="lead">An async s3 multi file uploader.</p>
+        <p>Source available <a href="http://github.com/ebenoist/archivos">here</a>.</p>
+
+        <form class="form-horizontal" action="v1/media" method="POST" enctype="multipart/form-data">
+          <fieldset>
+          <legend> Create a new order </legend>
+
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="files">Files:</label>
+            <div class="col-md-4">
+              <input class="form-control" type="file" name="files[]" id="files" multiple="multiple" />
+              <span class="help-block">Select all the media files needed.</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="order_code">Order Code:</label>
+            <div class="col-md-4">
+              <input class="form-control" type="text" name="order_code" id="order_code" />
+              <span class="help-block">The unique order number</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-md-4">
+              <input class="btn btn-primary" type="submit">
+            </div>
+          </div>
+
+        </fieldset>
+        </form>
+
+      </div> <!--end container-->
+    </div> <!--end wrap-->
+
+
+    <div id="footer">
+      <div class="container">
+        <p class="text-muted credit">Created by <a href="http://erikbenoist.com">Erik Benoist</a>.</p>
+      </div>
+    </div>
+  </body>
+</html>
+
+
