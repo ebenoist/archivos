@@ -39,9 +39,9 @@ module Archivos
       Media.stub(:create).with(hash_including({ order_code: order_code })).and_return(media)
 
       S3UploadWorker.should_receive(:perform_async).with do |file|
-        file[:id].should == media.id
-        file[:file_name].should == "image_two.jpg"
-        file[:order_code].should == order_code
+        expect(file[:id]).to eq(media.id.to_s)
+        expect(file[:file_name]).to eq("image_two.jpg")
+        expect(file[:order_code]).to eq(order_code)
 
         file_contents = File.open(file[:file], "rb") { |io| io.read }
         expect(file_contents).to eq(fixture_contents)

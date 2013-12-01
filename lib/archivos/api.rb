@@ -14,8 +14,8 @@ module Archivos
           file_name = file[:filename]
           file_type = file[:type]
 
-          File.open("tmp/uploads/#{file_name}", "w") do |f|
-            f.write(file[:tempfile].read)
+          File.open("tmp/uploads/#{file_name}", "w") do |tmp|
+            tmp.write(file[:tempfile].read)
           end
 
           media = Media.create({ order_code: order_code, file_name: file_name, mime: file_type })
