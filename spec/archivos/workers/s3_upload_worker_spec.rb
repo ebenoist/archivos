@@ -11,7 +11,7 @@ module Archivos
       @file_fixture = Archivos.root + "/spec/fixtures/image_one.jpg"
       @job_description = { id: @media.id.to_s, order_code: "foo", file: @file_fixture, file_name: "bar.jpg" }
 
-      @s3_object = double(:s3_object, {public_uri: "foo.local/image.img"})
+      @s3_object = double(:s3_object, { public_url: "foo.local/image.img" })
       S3Client.stub(:upload_file!).and_return(@s3_object)
     end
 
@@ -32,7 +32,7 @@ module Archivos
 
     it "adds the public uri to the media object after uploading" do
       uri = URI("http://amazonsupr.internet.com/my-pixs.jpg")
-      s3_object = double(:s3_object, {public_uri: uri})
+      s3_object = double(:s3_object, {public_url: uri})
       S3Client.stub(:upload_file!).and_return(s3_object)
 
       S3UploadWorker.perform_async(@job_description)
