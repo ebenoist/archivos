@@ -16,16 +16,9 @@ api = Rack::URLMap.new(
 
 index = Proc.new { |env|
   if env["PATH_INFO"] == "/"
-  [
-    200,
-    {
-      'Content-Type'  => 'text/html',
-      'Cache-Control' => 'public, max-age=86400'
-    },
-    File.open('www/index.html', File::RDONLY)
-  ]
+    Rack::Response.new(File.open("www/index.html", File::RDONLY), 200, { "Content-Type" => "text/html" }).finish
   else
-    Rack::Response.new(["Doesn't exist"], 404).finish
+    Rack::Response.new(["Does not exist!"], 404).finish # Cascade to the API
   end
 }
 
