@@ -8,5 +8,9 @@ Bundler.require
 require "mongoid"
 require "archivos"
 require "uuid"
+
 Mongoid.load!(Archivos.database_config)
+
+# Load worker
+require "archivos/workers/s3_upload_worker"
 
