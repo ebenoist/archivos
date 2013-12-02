@@ -1,5 +1,3 @@
-require "capistrano/bundler"
-
 set :application, "archvios"
 set :repo_url, "git@github.com:ebenoist/archivos.git"
 
@@ -8,18 +6,13 @@ set :scm, :git
 
 set :format, :pretty
 set :log_level, :debug
-set :pty, false
-set :deploy_via, :remote_cache
+set :pty, true
 
+set :deploy_via, :remote_cache
 set :linked_files, %w{config/aws.yml}
 set :linked_dirs, %w{log tmp/pids}
-set :bundle_roles, :app
-set :bundle_without, %w{development test}.join(' ')
-set :bundle_bins, %w(gem rake rails)
-set :bundle_gemfile, -> { release_path.join('Gemfile') }
-set :bundle_flags, '--deployment '
-set :bundle_dir, -> { shared_path.join('bundle') }
 
+set :bundle_flags, '--verbose'
 set :keep_releases, 5
 
 namespace :deploy do
