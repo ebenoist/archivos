@@ -1,5 +1,3 @@
-require 'capistrano/setup'
-require 'capistrano/deploy'
-require 'capistrano/bundler'
+load "deploy"
+load "config/deploy"
 
-Dir.glob('lib/capistrano/tasks/*.cap').each { |r| import r }
