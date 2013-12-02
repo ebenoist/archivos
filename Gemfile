@@ -2,7 +2,6 @@ source "https://rubygems.org"
 
 gem "bundler"
 gem "thin"
-gem "god"
 gem "rack"
 gem "rake"
 gem "sinatra"
@@ -24,6 +23,5 @@ group :test do
 end
 
 group :development do
-  gem "capistrano"
-  gem "capistrano-bundler"
+  gem "capistrano", "~> 2.15.4"
 end
