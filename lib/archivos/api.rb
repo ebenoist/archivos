@@ -38,6 +38,11 @@ module Archivos
           Media.all.to_json
         end
       end
+
+      get "/media/:id" do
+        Media.find(params["id"]).to_json
+      end
+
     end
   end
 end
