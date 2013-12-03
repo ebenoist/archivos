@@ -31,6 +31,7 @@ module Archivos
     it "kicks off a background process to upload to s3" do
       order_code = UUID.generate
       file = Rack::Test::UploadedFile.new(fixture("image_two.jpg"), "image/jpg")
+
       post "/v1/media", { order_code: order_code, files: [file] }
 
       fixture_contents = File.open(fixture("image_two.jpg"), "rb") { |io| io.read }

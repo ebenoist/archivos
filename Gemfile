@@ -23,5 +23,6 @@ group :test do
 end
 
 group :development do
+  gem "rvm-capistrano"
   gem "capistrano", "~> 2.15.4"
 end
