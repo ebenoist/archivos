@@ -62,7 +62,6 @@ module Archivos
         media_one.save!
         media_two.save!
 
-
         get "/v1/media"
 
         expect(last_response.body).to eq([media_one, media_two].to_json)
@@ -76,10 +75,20 @@ module Archivos
         media_one.save!
         media_two.save!
 
-
         get "/v1/media", { order_code: id }
 
         expect(last_response.body).to eq([media_one].to_json)
+      end
+
+      it "gets an individual record" do
+        media_one = Media.new({ file_name: "one.jpg" })
+
+        media_one.save!
+        id = media_one.id.to_s
+
+        get "/v1/media/#{id}"
+
+        expect(last_response.body).to eq(media_one.to_json)
       end
     end
 
