@@ -29,7 +29,14 @@ module Archivos
 
           media
         end.to_json
+      end
 
+      get "/media" do
+        if params["order_code"]
+          Media.where({ order_code: params["order_code"] }).to_json
+        else
+          Media.all.to_json
+        end
       end
     end
   end
