@@ -9,7 +9,7 @@ module Archivos
 
     namespace "/v1" do
       post "/media" do
-        params["files"].map do |file|
+        params["files"].each do |file|
           order_code = params["order_code"]
           file_name = file[:filename]
           file_type = file[:type]
@@ -18,7 +18,7 @@ module Archivos
             tmp.write(file[:tempfile].read)
           end
 
-          media = Media.create({ order_code: order_code, file_name: file_name, mime: file_type })
+          media = Media.create!({ order_code: order_code, file_name: file_name, mime: file_type })
 
           S3UploadWorker.perform_async({
             id: media.id.to_s,
@@ -26,9 +26,12 @@ module Archivos
             order_code: order_code,
             file: "tmp/uploads/#{file_name}"
           })
+        end
 
-          media
-        end.to_json
+        request.accept.each do |type|
+          halt 201 if type == "application/json"
+          redirect "/"
+        end
       end
 
       get "/media" do
