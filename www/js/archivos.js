@@ -1,4 +1,5 @@
 window.Media = Backbone.Model.extend({
+  idAttribute: "_id",
   urlRoot: "/v1/media",
 
   file_name: function() {
@@ -32,7 +33,15 @@ window.MediaView = Backbone.View.extend({
 
   initialize: function() {
     _.bindAll(this, "render");
-     this.model.bind('change', this.render);
+     this.model.on("change", this.render, this);
+  },
+
+  pollForChanges: function() {
+    // on initialize if the model is dirty, set a timeout and poll
+    // on every change event check to see if the model is still dirty
+    // if it is, delete polling.
+    // et voila
+
   },
 
   render: function(eventName) {
@@ -47,9 +56,9 @@ window.MediaListView = Backbone.View.extend({
   initialize: function() {
     var self = this;
     this.collection.bind("reset", this.render. this);
-    // this.collection.bind("add", function(media) {
-      // $(self.el).append(new MediaView({ model: media }).render().el);
-    // });
+    this.collection.bind("add", function(media) {
+      $(self.el).append(new MediaView({ model: media }).render().el);
+    });
   },
 
   render: function(eventName) {
@@ -71,6 +80,8 @@ var ArchivosRouter = Backbone.Router.extend({
         new MediaListView({ collection: data }).render();
       }
     });
+
+    setInterval(function() { mediaList.fetch(); }, 1000); // dirty hack
   }
 });
 
