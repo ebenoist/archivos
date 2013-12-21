@@ -39,7 +39,7 @@ module Archivos
         fixture_contents = File.open(fixture("image_two.jpg"), "rb") { |io| io.read }
 
         media = Media.create!
-        Media.stub(:create).with(hash_including({ order_code: order_code })).and_return(media)
+        Media.stub(:create!).with(hash_including({ order_code: order_code })).and_return(media)
 
         S3UploadWorker.should_receive(:perform_async).with do |file|
           expect(file[:id]).to eq(media.id.to_s)
@@ -51,6 +51,16 @@ module Archivos
         end
 
         post "/v1/media", { order_code: order_code, files: [file] }
+      end
+
+      it "redirects to the index if accept is html" do
+        header "Accept", "text/html"
+
+        file = Rack::Test::UploadedFile.new(fixture("image_two.jpg"), "image/jpg")
+        post "/v1/media", { order_code: "foo", files: [file] }
+        follow_redirect!
+
+        expect(last_request.url).to eq("http://example.org/index.html")
       end
     end
 
