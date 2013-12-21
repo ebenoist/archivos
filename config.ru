@@ -10,7 +10,7 @@ use Rack::Static,
   :root => "www"
 
 api = Rack::URLMap.new(
-  "/" => Archivos::API,
+  "/" => API,
   "/sidekiq" => Sidekiq::Web
 )
 
