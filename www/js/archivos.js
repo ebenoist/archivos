@@ -71,6 +71,20 @@ window.MediaListView = Backbone.View.extend({
   }
 });
 
+window.UploadView = Backbone.View.extend({
+  events: {
+    "click": "uploadSubmit"
+  },
+
+  uploadSubmit: function() {
+    var formData = new FormData(document.forms.main);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', "/v1/media", true);
+    xhr.send(formData);
+    false;
+  }
+});
+
 
 var ArchivosRouter = Backbone.Router.extend({
   initialize: function() {
@@ -81,6 +95,7 @@ var ArchivosRouter = Backbone.Router.extend({
       }
     });
 
+    new UploadView({ el: $("#jsSubmit") });
     setInterval(function() { mediaList.fetch(); }, 1000); // dirty hack
   }
 });

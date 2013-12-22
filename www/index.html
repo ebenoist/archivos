@@ -18,7 +18,7 @@
         </div>
         <p class="lead">An async s3 multi file uploader. Source available <a href="http://github.com/ebenoist/archivos">here</a>.</p>
 
-        <form class="form-horizontal" action="v1/media" method="POST" enctype="multipart/form-data">
+        <form class="form-horizontal" id="main" action="v1/media" method="POST" enctype="multipart/form-data">
           <fieldset>
           <legend>Create a new order</legend>
 
@@ -40,11 +40,13 @@
 
           <div class="form-group">
             <div class="col-md-4 col-md-offset-4">
-              <input class="btn btn-primary" type="submit">
+              <input class="btn btn-primary" type="submit" value="Blocking Upload"></input>
             </div>
           </div>
         </fieldset>
         </form>
+        <button class="btn btn-danger" id="jsSubmit">Async Upload</button>
+
 
         <div class="upload-file-list">
           <table class="table table-striped table-condensed">
