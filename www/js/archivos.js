@@ -76,12 +76,14 @@ window.UploadView = Backbone.View.extend({
     "click": "uploadSubmit"
   },
 
-  uploadSubmit: function() {
+  uploadSubmit: function(event) {
+    event.preventDefault();
+
     var formData = new FormData(document.forms.main);
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "/v1/media", true);
     xhr.send(formData);
-    false;
+    return false;
   }
 });
 
