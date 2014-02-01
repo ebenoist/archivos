@@ -10,3 +10,5 @@ task :stop do
   system("kill -2 `cat tmp/pids/sidekiq.pid`; true") # stop sidekiq
 end
 
+require 'jasmine'
+load 'jasmine/tasks/jasmine.rake'

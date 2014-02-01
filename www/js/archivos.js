@@ -25,7 +25,15 @@ window.Media = Backbone.Model.extend({
 
 window.MediaList = Backbone.Collection.extend({
   model: Media,
-  url: "/v1/media"
+
+  initialize: function(order_id, count) {
+    this.order_id = order_id;
+    this.count = count;
+  },
+
+  url: function() {
+    return "/v1/media" + "?order_id=" + this.order_id;
+  }
 })
 
 window.MediaView = Backbone.View.extend({
@@ -37,11 +45,7 @@ window.MediaView = Backbone.View.extend({
   },
 
   pollForChanges: function() {
-    // on initialize if the model is dirty, set a timeout and poll
-    // on every change event check to see if the model is still dirty
-    // if it is, delete polling.
-    // et voila
-
+    // var timer = setInterval(function() { mediaList.fetch(); }, 1000); // dirty hack
   },
 
   render: function(eventName) {
@@ -83,6 +87,8 @@ window.UploadView = Backbone.View.extend({
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "/v1/media", true);
     xhr.send(formData);
+
+    mediaList = new MediaList(formData.order_code.value, formData.files.files.length);
     return false;
   }
 });
@@ -90,7 +96,7 @@ window.UploadView = Backbone.View.extend({
 
 var ArchivosRouter = Backbone.Router.extend({
   initialize: function() {
-    var mediaList = new MediaList();
+    // var mediaList = new MediaList();
     mediaList.fetch({
       success: function(data) {
         new MediaListView({ collection: data }).render();
@@ -98,7 +104,6 @@ var ArchivosRouter = Backbone.Router.extend({
     });
 
     new UploadView({ el: $("#jsSubmit") });
-    setInterval(function() { mediaList.fetch(); }, 1000); // dirty hack
   }
 });
 

@@ -4,8 +4,8 @@ gem "bundler"
 gem "thin"
 gem "rack"
 gem "rake"
-gem "sinatra"
-gem "sinatra-contrib"
+gem "sinatra", require: "sinatra/base"
+gem "sinatra-contrib", require: false
 gem "mongoid", "~> 3.0.0"
 gem "bson_ext"
 gem "uuid"
@@ -20,6 +20,7 @@ end
 group :test do
   gem "rspec"
   gem "rack-test"
+  gem 'jasmine'
 end
 
 group :development do
