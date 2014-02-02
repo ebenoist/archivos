@@ -1,6 +1,7 @@
 require "sinatra/base"
 require "sinatra/namespace"
 require "archivos/models/media"
+require "archivos/models/order"
 require "archivos/workers/s3_upload_worker"
 
 class API < Sinatra::Base
@@ -29,7 +30,7 @@ class API < Sinatra::Base
 
       request.accept.each do |type|
         halt 201 if type == "application/json"
-        redirect "/"
+        redirect "/?order_code=#{params["order_code"]}" # TODO: test
       end
     end
 
@@ -43,6 +44,13 @@ class API < Sinatra::Base
 
     get "/media/:id" do
       Media.find(params["id"]).to_json
+    end
+
+    get "/order/:id" do
+      order = Order.where({ order_code: params["id"] }).first
+      halt 404 if order.nil?
+
+      order.to_json
     end
 
   end

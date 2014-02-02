@@ -20,15 +20,7 @@
 
         <form class="form-horizontal" id="main" action="v1/media" method="POST" enctype="multipart/form-data">
           <fieldset>
-            <legend>Create a new order</legend>
-
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="files">Files:</label>
-              <div class="col-md-6">
-                <input class="form-control" type="file" name="files[]" id="files" multiple="multiple" />
-                <span class="help-block">Select all the media files needed.</span>
-              </div>
-            </div>
+            <legend>Your order</legend>
 
             <div class="form-group">
               <label class="col-md-4 control-label" for="order_code">Order Code:</label>
@@ -40,7 +32,25 @@
 
             <div class="form-group">
               <div class="col-md-4 col-md-offset-4">
-                <button class="btn btn-danger" id="jsSubmit">Async Upload</button>
+                <button class="btn btn-primary" type="submit" value="Login" id="checkOrder">Login</button>
+              </div>
+            </div>
+
+          </fieldset>
+
+          <fieldset id="upload">
+            <legend>Upload files to your order</legend>
+
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="files">Files:</label>
+              <div class="col-md-6">
+                <input class="form-control" type="file" name="files[]" id="files" multiple="multiple" />
+                <span class="help-block">Select all the media files needed.</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-md-4 col-md-offset-4">
                 <input class="btn btn-primary" type="submit" value="Blocking Upload"></input>
               </div>
             </div>
