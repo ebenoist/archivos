@@ -1,7 +1,6 @@
 #encoding: utf-8
 
 require "archivos/api"
-require "archivos/models/media"
 
 def app
   API
@@ -100,5 +99,22 @@ describe "Archivos API" do
     end
   end
 
+  context "GET /order/:id" do
+    it "can be retrieved via order_code" do
+      code = "foo"
+      order = Order.new({ order_code: code })
+      order.save!
+
+      get "/v1/order/#{code}"
+
+      expect(last_response.body).to eq(order.to_json)
+    end
+
+    it "responds with a 404 if not found" do
+      get "/v1/order/snagglepoo"
+
+      expect(last_response.status).to eq(404)
+    end
+  end
 end
 

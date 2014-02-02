@@ -40,3 +40,7 @@ body {
   letter-spacing: 1px;
 }
 
+#upload {
+  display: none;
+}
+

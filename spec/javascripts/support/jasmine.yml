@@ -11,7 +11,10 @@
 #   - dist/**/*.js
 #
 src_files:
-  - www/js/**/*.js
+  - js/vendor/jquery*.js
+  - js/vendor/underscore*.js
+  - js/vendor/backbone*.js
+  - js/archivos.js
 
 # stylesheets
 #

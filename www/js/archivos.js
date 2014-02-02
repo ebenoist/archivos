@@ -1,3 +1,8 @@
+window.Order = Backbone.Model.extend({
+  idAttribute: "order_code",
+  urlRoot: "/v1/order",
+});
+
 window.Media = Backbone.Model.extend({
   idAttribute: "_id",
   urlRoot: "/v1/media",
@@ -26,13 +31,8 @@ window.Media = Backbone.Model.extend({
 window.MediaList = Backbone.Collection.extend({
   model: Media,
 
-  initialize: function(order_id, count) {
-    this.order_id = order_id;
-    this.count = count;
-  },
-
-  url: function() {
-    return "/v1/media" + "?order_id=" + this.order_id;
+  initialize: function(data) {
+    this.url = "/v1/media?order_code=" + data.order_code;
   }
 })
 
@@ -42,10 +42,6 @@ window.MediaView = Backbone.View.extend({
   initialize: function() {
     _.bindAll(this, "render");
      this.model.on("change", this.render, this);
-  },
-
-  pollForChanges: function() {
-    // var timer = setInterval(function() { mediaList.fetch(); }, 1000); // dirty hack
   },
 
   render: function(eventName) {
@@ -81,29 +77,70 @@ window.UploadView = Backbone.View.extend({
   },
 
   uploadSubmit: function(event) {
-    event.preventDefault();
-
-    var formData = new FormData(document.forms.main);
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', "/v1/media", true);
-    xhr.send(formData);
-
-    mediaList = new MediaList(formData.order_code.value, formData.files.files.length);
+    mediaList = new MediaList(formData.order_code.value);
+    console.log("here");
     return false;
   }
 });
 
+window.OrderCodeView = Backbone.View.extend({
+  events: {
+    "click": "checkOrder",
+  },
+
+  renderOrder: function(order_code) {
+    order = new Order({ order_code: order_code});
+
+    order.fetch({
+      success: function() {
+        console.log("cool");
+
+        var mediaList = new MediaList({ order_code: order.get("order_code") });
+        mediaList.fetch({
+          success: function(data) {
+            $("#upload").show();
+            new MediaListView({ collection: data }).render();
+          }
+        });
+      }
+    })
+  },
+
+  checkOrder: function(event) {
+    event.preventDefault();
+
+    this.renderOrder(document.forms.main.order_code.value);
+    return false;
+  }
+
+});
+
+function getQueryParams(qs) {
+    qs = qs.split("+").join(" ");
+
+    var params = {}, tokens,
+        re = /[?&]?([^=]+)=([^&]*)/g;
+
+    while (tokens = re.exec(qs)) {
+        params[decodeURIComponent(tokens[1])]
+            = decodeURIComponent(tokens[2]);
+    }
+
+    return params;
+}
 
 var ArchivosRouter = Backbone.Router.extend({
   initialize: function() {
-    // var mediaList = new MediaList();
-    mediaList.fetch({
-      success: function(data) {
-        new MediaListView({ collection: data }).render();
-      }
-    });
+    params = getQueryParams(document.location.search);
+    if (params.order_code) {
+      document.forms.main.order_code.value = params.order_code;
+      var orderView = new OrderCodeView({ el: $("#checkOrder") });
+      orderView.renderOrder(params.order_code);
+    } else {
+     new OrderCodeView({ el: $("#checkOrder") });
+    }
 
-    new UploadView({ el: $("#jsSubmit") });
+    new UploadView({ el: $("#submit") });
   }
 });
 
