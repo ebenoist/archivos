@@ -50,14 +50,15 @@ describe "Archivos API" do
       post "/v1/media", { order_code: order_code, files: [file] }
     end
 
-    it "redirects to the index if accept is html" do
+    it "redirects to the index if accept is html and order_code is set" do
       header "Accept", "text/html"
 
       file = Rack::Test::UploadedFile.new(fixture("image_two.jpg"), "image/jpg")
-      post "/v1/media", { order_code: "foo", files: [file] }
+      order_code = "foo"
+      post "/v1/media", { order_code: order_code, files: [file] }
       follow_redirect!
 
-      expect(last_request.url).to eq("http://example.org/")
+      expect(last_request.url).to eq("http://example.org/?order_code=#{order_code}")
     end
   end
 
