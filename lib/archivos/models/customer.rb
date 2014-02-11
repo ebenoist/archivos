@@ -1,15 +1,14 @@
 require "archivos/models/order"
 
-class Media
+class Customer
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :file_name, type: String
-  field :public_uri, type: String
-  field :order_code, type: String
+  field :name, type: String
+  field :email, type: String
+  field :phone_number, type: String
   field :created_at, type: DateTime
   field :updated_at, type: DateTime
-  field :mime, type: String
 
-  belongs_to :order
+  has_many :orders
 end
