@@ -11,7 +11,10 @@ require initializer
 irb = RUBY_PLATFORM =~ /(:?mswin|mingw)/ ? "irb.bat" : "irb"
 libs =  " -r irb/completion"
 libs << " -r #{initializer}"
-libs << " -r lib/archivos/models/media"
+
+Dir.glob("lib/archivos/models/*.rb").each do |file|
+  libs << " -r #{file}"
+end
 
 ENV["ENV"] ||= "development"
 

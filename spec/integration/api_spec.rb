@@ -100,6 +100,34 @@ describe "Archivos API" do
     end
   end
 
+  context "v1/customer" do
+    it "GET returns all the customers" do
+      customer = Customer.create({ name: "foo" })
+
+      get "/v1/customer"
+
+      expect(last_response).to be_ok
+      expect(last_response.body).to eq([customer].to_json)
+    end
+
+    it "POST creates a new customer" do
+      email = "l@l.com"
+      name = "leila"
+      phone_number = "555"
+      customer = { email: email, name: name, phone_number: phone_number }
+
+      post "/v1/customer", customer
+
+      customers = Customer.where(customer)
+      expect(customers).to have(1).items
+
+      created_customer = customers.first
+      expect(created_customer.email).to eq(email)
+      expect(created_customer.name).to eq(name)
+      expect(created_customer.phone_number).to eq(phone_number)
+    end
+  end
+
   context "GET /order/:id" do
     it "can be retrieved via order_code" do
       code = "foo"
@@ -115,6 +143,54 @@ describe "Archivos API" do
       get "/v1/order/snagglepoo"
 
       expect(last_response.status).to eq(404)
+    end
+
+    it "POST creates a new order" do
+      customer = Customer.create
+
+      package = "silver"
+      delivery_date = DateTime.now
+      order_code = "abc"
+      customer_id = customer._id
+      order = { package: package, delivery_date: delivery_date, order_code: order_code, customer_id: customer_id }
+
+      post "/v1/order", order
+
+      orders = Customer.find(customer._id).orders
+      expect(orders).to have(1).items
+
+      created_order = orders.first
+      expect(created_order.package).to eq(package)
+      expect(created_order.delivery_date.to_s).to eq(delivery_date.to_s)
+      expect(created_order.order_code).to eq(order_code)
+    end
+  end
+
+  context "GET /admin" do
+    it "responds with a 401 if no credentials are provided" do
+      get "/admin"
+      expect(last_response.status).to eq(401)
+    end
+
+    it "responds with a 401 credentials not belonging to an admin are entered" do
+      authorize "foo", "no-way"
+
+      get "/admin"
+
+      expect(last_response.status).to eq(401)
+    end
+
+    it "renders the admin page if matching credentials are entered" do
+      user_name = "foo"
+      password = "correct!"
+
+      admin = Admin.stub(:authorized?).with(user_name, password).and_return(true)
+      authorize user_name, password
+
+      get "/admin"
+
+      expect(last_response.status).to eq(200)
+      expect(last_response.body).to match(/admin/i)
     end
   end
 end

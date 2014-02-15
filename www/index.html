@@ -82,6 +82,10 @@
     <td><%= media.get("order_code") %></td>
   </script>
   <script src="/js/archivos.js"></script>
+  <script type="text/javascript">
+    window.app = new ArchivosRouter();
+    Backbone.history.start();
+  </script>
 </html>
 
 
