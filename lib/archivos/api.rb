@@ -36,7 +36,6 @@ class API < Sinatra::Base
   end
 
   namespace "/v1" do
-
     post "/media" do
       params["files"].each do |file|
         order_code = params["order_code"]
@@ -83,18 +82,26 @@ class API < Sinatra::Base
     end
 
     post "/order" do
-      package = params["package"]
-      delivery_date = params["delivery_date"]
-      order_code = params["order_code"]
-      customer_id = params["customer_id"]
+      body = JSON.parse(request.body.read)
+
+      package = body["package"]
+      delivery_date = body["delivery_date"]
+      order_code = body["order_code"]
+      customer_id = body["customer_id"]
 
       customer = Customer.find(customer_id)
 
-      order = Order.new({ package: package, delivery_date: delivery_date, order_code: order_code, customer_id: customer_id })
+      order = Order.new({
+        package: package,
+        delivery_date: delivery_date,
+        order_code: order_code,
+        customer_id: customer_id
+      })
+
       customer.orders << order
       customer.save!
 
-      redirect "/admin"
+      order.to_json
     end
 
     get "/customer" do
@@ -104,13 +111,14 @@ class API < Sinatra::Base
     end
 
     post "/customer" do
-      name = params["name"]
-      email = params["email"]
-      phone_number = params["phone_number"]
+      body = JSON.parse(request.body.read)
+      name = body["name"]
+      email = body["email"]
+      phone_number = body["phone_number"]
 
-      Customer.create!({ name: name, email: email, phone_number: phone_number })
+      customer = Customer.create!({ name: name, email: email, phone_number: phone_number })
 
-      redirect "/admin"
+      customer.to_json
     end
 
   end

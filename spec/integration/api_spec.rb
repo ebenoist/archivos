@@ -114,9 +114,11 @@ describe "Archivos API" do
       email = "l@l.com"
       name = "leila"
       phone_number = "555"
-      customer = { email: email, name: name, phone_number: phone_number }
+      customer = { "email" => email, "name" => name, "phone_number" => phone_number }
 
-      post "/v1/customer", customer
+      header "Content-Type", "application/json"
+      post "/v1/customer", customer.to_json
+      expect(JSON.parse(last_response.body)).to include(customer)
 
       customers = Customer.where(customer)
       expect(customers).to have(1).items
@@ -152,9 +154,16 @@ describe "Archivos API" do
       delivery_date = DateTime.now
       order_code = "abc"
       customer_id = customer._id
-      order = { package: package, delivery_date: delivery_date, order_code: order_code, customer_id: customer_id }
 
-      post "/v1/order", order
+      order = {
+        "package" => package,
+        "delivery_date" => delivery_date,
+        "order_code" => order_code,
+        "customer_id" => customer_id
+      }
+
+      header "Content-Type", "application/json"
+      post "/v1/order", order.to_json
 
       orders = Customer.find(customer._id).orders
       expect(orders).to have(1).items
