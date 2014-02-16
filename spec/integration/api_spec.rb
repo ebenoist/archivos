@@ -130,21 +130,26 @@ describe "Archivos API" do
     end
   end
 
-  context "GET /order/:id" do
-    it "can be retrieved via order_code" do
-      code = "foo"
-      order = Order.new({ order_code: code })
-      order.save!
+  context "/order" do
+    it "can be retrieved via id" do
+      order = Order.create!
 
-      get "/v1/order/#{code}"
+      get "/v1/orders/#{order._id}"
 
       expect(last_response.body).to eq(order.to_json)
     end
 
     it "responds with a 404 if not found" do
-      get "/v1/order/snagglepoo"
+      get "/v1/orders/snagglepoo"
 
       expect(last_response.status).to eq(404)
+    end
+
+    it "GETs all the orders" do
+      orders = [Order.create!, Order.create!]
+      get "/v1/orders"
+
+      expect(last_response.body).to eq(orders.to_json)
     end
 
     it "POST creates a new order" do
@@ -163,7 +168,7 @@ describe "Archivos API" do
       }
 
       header "Content-Type", "application/json"
-      post "/v1/order", order.to_json
+      post "/v1/orders", order.to_json
 
       orders = Customer.find(customer._id).orders
       expect(orders).to have(1).items

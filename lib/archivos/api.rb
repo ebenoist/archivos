@@ -74,14 +74,20 @@ class API < Sinatra::Base
       Media.find(params["id"]).to_json
     end
 
-    get "/order/:id" do
-      order = Order.where({ order_code: params["id"] }).first
-      halt 404 if order.nil?
-
-      order.to_json
+    get "/orders/:id" do
+      begin
+        order = Order.find(params["id"])
+        order.to_json
+      rescue Mongoid::Errors::DocumentNotFound => e
+        halt 404 if order.nil?
+      end
     end
 
-    post "/order" do
+    get "/orders" do
+      Order.all.to_json
+    end
+
+    post "/orders" do
       body = JSON.parse(request.body.read)
 
       package = body["package"]
