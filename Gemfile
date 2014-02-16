@@ -20,7 +20,6 @@ end
 group :test do
   gem "rspec"
   gem "rack-test"
-  gem 'jasmine'
 end
 
 group :development do
