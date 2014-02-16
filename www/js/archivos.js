@@ -12,12 +12,17 @@ serializeForm = function(el) {
 
 window.Order = Backbone.Model.extend({
   idAttribute: "_id",
-  urlRoot: "/v1/order",
+  urlRoot: "/v1/orders",
+});
+
+window.OrderList = Backbone.Collection.extend({
+  model: Order,
+  url: "/v1/orders",
 });
 
 window.Customer = Backbone.Model.extend({
   idAttribute: "_id",
-  urlRoot: "/v1/customer",
+  urlRoot: "/v1/customer"
 });
 
 window.CustomerList = Backbone.Collection.extend({
@@ -61,6 +66,7 @@ window.CustomerFormView = Backbone.View.extend({
     var customer = new Customer(customerData);
 
     customer.save({}, {
+      type: "post",
       success: function(model, response, options) {
         window.flash.displaySuccess("Created: " + JSON.stringify(model));
       },
@@ -221,20 +227,21 @@ window.OrderCodeView = Backbone.View.extend({
   },
 
   renderOrder: function(order_code) {
-    order = new Order({ order_code: order_code});
+    var self = this;
+    order = this.collection.findWhere({ order_code: order_code });
 
-    order.fetch({
-      success: function() {
-        var mediaList = new MediaList({ order_code: order.get("order_code") });
-        mediaList.fetch({
-          success: function(data) {
-            $("#upload").show();
-            $(".upload-file-list").show();
-            new MediaListView({ collection: data }).render();
-          }
-        });
-      }
-    })
+    if (order != null) {
+      var mediaList = new MediaList({ order_code: order.get("order_code") });
+      mediaList.fetch({
+        success: function(data) {
+          $("#upload").show();
+          $(".upload-file-list").show();
+          new MediaListView({ collection: data }).render();
+        }
+      });
+    } else {
+      // flash
+    }
   },
 
   checkOrder: function(event) {
@@ -264,11 +271,27 @@ var ArchivosRouter = Backbone.Router.extend({
   initialize: function() {
     params = getQueryParams(document.location.search);
     if (params.order_code) {
-      document.forms.main.order_code.value = params.order_code;
-      var orderView = new OrderCodeView({ el: $("#checkOrder") });
-      orderView.renderOrder(params.order_code);
+      var order_code = params.order_code;
+      document.forms.main.order_code.value = order_code;
+
+      var mediaList = new MediaList({ order_code: order_code }); // TODO: DRY
+      mediaList.fetch({
+        success: function(data) {
+          $("#upload").show();
+          $(".upload-file-list").show();
+          new MediaListView({ collection: data }).render();
+        }
+      });
+
     } else {
-     new OrderCodeView({ el: $("#checkOrder") });
+      var orders = new OrderList();
+
+      orders.fetch({
+        success: function() {
+          var orderView = new OrderCodeView({ collection: orders, el: $("#checkOrder") });
+          orderView.renderOrder(params.order_code);
+        }
+      });
     }
 
     new UploadView({ el: $("#submit") });
