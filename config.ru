@@ -6,7 +6,7 @@ require 'sidekiq/web'
 require "archivos/api"
 
 use Rack::Static,
-  :urls => ["/images", "/js", "/css", "/vendor","/admin.html", "/js/vendor"],
+  :urls => ["/images", "/js", "/css", "/vendor", "/js/vendor"],
   :root => "www"
 
 api = Rack::URLMap.new(
