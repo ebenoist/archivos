@@ -9,6 +9,3 @@ task :stop do
   system("bundle exec thin -o 9393 stop; true") # stop api
   system("kill -2 `cat tmp/pids/sidekiq.pid`; true") # stop sidekiq
 end
-
-require 'jasmine'
-load 'jasmine/tasks/jasmine.rake'
