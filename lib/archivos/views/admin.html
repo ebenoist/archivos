@@ -12,13 +12,13 @@
 
   <body>
     <div id="wrap">
+      <div class="alert" id="flash"></div>
 
       <div class="container">
         <div class="page-header">
           <h1>Admin</h1>
         </div>
-
-          <form class="form-horizontal" id="main" action="v1/customer" method="POST">
+          <form class="form-horizontal" id="customer-form" action="v1/customer" method="POST">
             <fieldset>
               <legend>Create New Customer</legend>
                 <div class="form-group">
@@ -44,13 +44,13 @@
 
               <div class="form-group">
                 <div class="col-md-4 col-md-offset-4">
-                  <button class="btn btn-primary" type="submit" value="Login">Create Customer</button>
+                  <button class="btn btn-primary" type="submit" id="customer-form-submit">Create Customer</button>
                 </div>
               </div>
             </fieldset>
           </form>
 
-          <form class="form-horizontal" id="main" action="v1/order" method="POST">
+          <form class="form-horizontal" id="order-form" action="v1/order" method="POST">
             <fieldset>
               <legend>Create New Order</legend>
               <div class="form-group">
@@ -84,17 +84,13 @@
 
               <div class="form-group">
                 <div class="col-md-4 col-md-offset-4">
-                  <button class="btn btn-primary" type="submit" value="Login">Create Order</button>
+                  <button class="btn btn-primary" type="submit" id="order-form-submit">Create Order</button>
                 </div>
               </div>
 
             </fieldset>
           </form>
-
-
       </div>
-
-
 
     </div>
   </body>
@@ -107,9 +103,12 @@
 
   <script type="text/javascript">
     $( document ).ready(function() {
-        console.log("here");
         var customers = new CustomerList();
         var listView = new CustomerListView({ collection: customers });
+        window.customerFormView = new CustomerFormView();
+        window.orderFormView = new OrderFormView();
+        window.flash = new FlashView();
+
         customers.fetch();
       });
   </script>
