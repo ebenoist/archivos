@@ -20,6 +20,7 @@ body {
   max-width: 680px;
   padding: 0 15px;
 }
+
 .container .credit {
   margin: 20px 0;
 }
@@ -49,3 +50,40 @@ body {
   display: none;
 }
 
+.page-header {
+  margin: 0px 0px 0px 0px;
+  background-color: #428bca;
+  margin-bottom: 2em;
+  background-image: linear-gradient(to bottom,#428bca 0,#71b0e4 100%);
+}
+/* 71B0E4 */
+.page-header .content {
+  padding: 1em 1em 1em 2em;
+}
+
+.page-header h1 {
+  font-family: 'Comfortaa', cursive;
+  color: white;
+}
+
+.page-header p {
+  font-family: 'Comfortaa', cursive;
+  color: white;
+}
+
+#icon {
+  /* position: relative; */
+  font-size: 3.5em;
+  padding-top: 0.6em;
+  padding-left: 0.8em;
+  /* top: -1.2em; */
+  /* right: -9em; */
+  margin: 0px;
+}
+
+.centered {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}

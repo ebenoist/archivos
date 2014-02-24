@@ -8,109 +8,108 @@
     <script src="/js/vendor/jquery-1.10.2.min.js"></script>
     <script src="/js/vendor/underscore-min.js"></script>
     <script src="/js/vendor/backbone-min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Comfortaa:400,700' rel='stylesheet' type='text/css'>
   </head>
 
   <body>
-    <div id="wrap">
-      <div class="alert" id="flash"></div>
+  <div id="wrap">
+    <div class="alert" id="flash"></div>
 
-      <div class="container">
-        <div class="page-header">
-          <h1>Admin</h1>
-        </div>
-          <form class="form-horizontal" id="customer-form" action="v1/customer" method="POST">
-            <fieldset>
-              <legend>Create New Customer</legend>
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="order_code">Name:</label>
-                  <div class="col-md-6">
-                    <input class="form-control" type="text" name="name" id="name" />
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="email">Email:</label>
-                  <div class="col-md-6">
-                    <input class="form-control" type="text" name="email" id="email" />
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="phone_number">Phone Number:</label>
-                  <div class="col-md-6">
-                    <input class="form-control" type="text" name="phone_number" id="phone_number" />
-                  </div>
-                </div>
-
-              <div class="form-group">
-                <div class="col-md-4 col-md-offset-4">
-                  <button class="btn btn-primary" type="submit" id="customer-form-submit">Create Customer</button>
-                </div>
-              </div>
-            </fieldset>
-          </form>
-
-          <form class="form-horizontal" id="order-form" action="v1/order" method="POST">
-            <fieldset>
-              <legend>Create New Order</legend>
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="order_code">Order Code:</label>
-                <div class="col-md-6">
-                  <input class="form-control" type="text" name="order_code" id="order_code" />
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="package">Package:</label>
-                <div class="col-md-6">
-                  <input class="form-control" type="text" name="package" id="package" />
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="delivery_date">Delivery Date:</label>
-                <div class="col-md-6">
-                  <input class="form-control" type="date" name="delivery_date" id="delivery_date" />
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="customer">Customer:</label>
-                <div class="col-md-6">
-                  <select class="form-control" id="customer-container" name="customer_id">
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-md-4 col-md-offset-4">
-                  <button class="btn btn-primary" type="submit" id="order-form-submit">Create Order</button>
-                </div>
-              </div>
-
-            </fieldset>
-          </form>
+    <div class="container">
+      <div class="page-header">
+        <h1>Admin</h1>
       </div>
 
+      <form class="form-horizontal" id="customer-form" action="v1/customer" method="POST">
+        <fieldset>
+          <legend>Create New Customer</legend>
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="order_code">Name:</label>
+            <div class="col-md-6">
+              <input class="form-control" type="text" name="name" id="name" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="email">Email:</label>
+            <div class="col-md-6">
+              <input class="form-control" type="text" name="email" id="email" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="phone_number">Phone Number:</label>
+            <div class="col-md-6">
+              <input class="form-control" type="text" name="phone_number" id="phone_number" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-md-4 col-md-offset-4">
+              <button class="btn btn-primary" type="submit" id="customer-form-submit">Create Customer</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+
+      <form class="form-horizontal" id="order-form" action="v1/order" method="POST">
+        <fieldset>
+          <legend>Create New Order</legend>
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="order_code">Order Code:</label>
+            <div class="col-md-6">
+              <input class="form-control" type="text" name="order_code" id="order_code" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="package">Package:</label>
+            <div class="col-md-6">
+              <input class="form-control" type="text" name="package" id="package" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="delivery_date">Delivery Date:</label>
+            <div class="col-md-6">
+              <input class="form-control" type="date" name="delivery_date" id="delivery_date" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="customer">Customer:</label>
+            <div class="col-md-6">
+              <select class="form-control" id="customer-container" name="customer_id">
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-md-4 col-md-offset-4">
+              <button class="btn btn-primary" type="submit" id="order-form-submit">Create Order</button>
+            </div>
+          </div>
+
+        </fieldset>
+      </form>
     </div>
+  </div>
+
   </body>
 
-  <script src="/js/archivos.js"> </script>
+  <script src="/js/orders.js"> </script>
+  <script src="/js/customers.js"> </script>
+  <script src="/js/admin.js"> </script>
 
   <script type="text/template" id="customer-list-template">
     <option value="<%= customer._id %>"><%= customer.name %></option>
   </script>
 
   <script type="text/javascript">
-    $( document ).ready(function() {
-        var customers = new CustomerList();
-        var listView = new CustomerListView({ collection: customers });
-        window.customerFormView = new CustomerFormView();
-        window.orderFormView = new OrderFormView();
-        window.flash = new FlashView();
+    window.app = new AdminRouter();
+    Backbone.history.start();
+  </script>
 
-        customers.fetch();
-      });
   </script>
 </html>
 

@@ -3,29 +3,43 @@
   <head>
     <meta charset="utf-8">
     <title>archivos</title>
-    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
     <script src="/js/vendor/jquery-1.10.2.min.js"></script>
     <script src="/js/vendor/underscore-min.js"></script>
     <script src="/js/vendor/backbone-min.js"></script>
+    <link href="http://fonts.googleapis.com/css?family=Comfortaa:400,700" rel='stylesheet' type='text/css'>
   </head>
   <body>
     <div id="wrap">
-
       <div class="container">
+
         <div class="page-header">
-          <h1>Prime Picture Productions</h1>
+          <div class="content">
+
+            <div class="row">
+              <div class="col-xs-9">
+                <h1>Prime Picture Productions</h1>
+                <p>Upload your photos and pictures for your new project.</p>
+              </div>
+              <div class="col-xs-2 centered">
+                <i class="fa fa-film fa-inverse" id="icon"></i>
+              </div>
+            </div>
+
+          </div>
         </div>
 
         <form class="form-horizontal" id="main" action="v1/media" method="POST" enctype="multipart/form-data">
           <fieldset>
-            <legend>Your order</legend>
+            <legend>Your Order</legend>
 
-            <div class="form-group">
+            <div class="form-group" id="order-code-form">
               <label class="col-md-4 control-label" for="order_code">Order Code:</label>
               <div class="col-md-6">
                 <input class="form-control" type="text" name="order_code" id="order_code" />
-                <span class="help-block">The unique order number</span>
+                <span class="help-block" id="order-code-feedback">Your unique order number</span>
               </div>
             </div>
 
@@ -38,7 +52,7 @@
           </fieldset>
 
           <fieldset id="upload">
-            <legend>Upload files to your order</legend>
+            <legend>Upload Files to Your Order</legend>
 
             <div class="form-group">
               <label class="col-md-4 control-label" for="files">Files:</label>
@@ -50,7 +64,7 @@
 
             <div class="form-group">
               <div class="col-md-4 col-md-offset-4">
-                <input class="btn btn-primary" type="submit" value="Blocking Upload"></input>
+                <input class="btn btn-primary" type="submit" value="Upload File(s)"></input>
               </div>
             </div>
           </fieldset>
@@ -80,7 +94,10 @@
     <td><%= media.file_name() %></td>
     <td><%= media.get("order_code") %></td>
   </script>
-  <script src="/js/archivos.js"></script>
+  <script src="/js/helpers.js"></script>
+  <script src="/js/orders.js"></script>
+  <script src="/js/media.js"></script>
+  <script src="/js/main.js"></script>
   <script type="text/javascript">
     window.app = new ArchivosRouter();
     Backbone.history.start();
