@@ -26,3 +26,26 @@ window.CustomerListView = Backbone.View.extend({
     });
   }
 });
+
+window.CustomerEditListView = Backbone.View.extend({
+  template: "#customer-view-list-template",
+  el: $("#customer-list-view"),
+
+  initialize: function() {
+    _.bindAll(this, "render");
+     this.collection.on("sync", this.render, this);
+  },
+
+  render: function(eventName) {
+    var self = this;
+    $(self.el).empty();
+
+    _.each(this.collection.models, function(customer) {
+     var html = _.template($(self.template).html(), { customer: customer });
+      $(self.el).append(html);
+    });
+
+    return this;
+  }
+});
+

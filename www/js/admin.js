@@ -18,6 +18,7 @@ window.CustomerFormView = Backbone.View.extend({
       type: "post",
       success: function(model, response, options) {
         window.flash.displaySuccess("Created: " + JSON.stringify(model));
+        window.customers.fetch();
       },
 
       error: function(model, response, options) {
@@ -48,6 +49,7 @@ window.OrderFormView = Backbone.View.extend({
     order.save({}, {
       success: function(model, response, options) {
         window.flash.displaySuccess("Created: " + JSON.stringify(model));
+        window.orders.fetch();
       },
 
       error: function(model, response, options) {
@@ -79,28 +81,34 @@ window.FlashView = Backbone.View.extend({
   display: function(message) {
     var self = this;
 
-    $(self.el).fadeIn();
     $(self.el).append(message);
+    $(self.el).css("visibility", "visible");
 
     setTimeout(function() {
-      $(self.el).fadeOut();
+      $(self.el).css('visibility', 'hidden');
       $(self.el).empty();
       $(self.el).removeClass("alert-success");
       $(self.el).removeClass("alert-error");
     }, 4000);
   }
+
 })
 
 var AdminRouter = Backbone.Router.extend({
   initialize: function() {
-    var customers = new CustomerList();
-    var listView = new CustomerListView({ collection: customers });
+    window.orders = new OrderList();
+    window.customers = new CustomerList();
+
+    window.customerList = new CustomerListView({ collection: window.customers });
 
     window.customerFormView = new CustomerFormView();
     window.orderFormView = new OrderFormView();
     window.flash = new FlashView();
+    window.orderListView = new OrderListView({ collection: window.orders });
+    window.customerViewList = new CustomerEditListView({ collection: window.customers });
 
-    customers.fetch();
+    window.orders.fetch();
+    window.customers.fetch();
   }
 });
 

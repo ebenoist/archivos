@@ -11,4 +11,17 @@ class Order
   field :order_code, type: String
 
   belongs_to :customer
+
+  def to_json
+    as_json.to_json
+  end
+
+  def as_json(options = nil)
+    name_addition = {}
+    if (self.customer.present?)
+      name_addition[:customer_name] = self.customer.name
+    end
+
+    self.attributes.merge!(name_addition)
+  end
 end
