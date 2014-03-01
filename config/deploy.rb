@@ -31,6 +31,7 @@ before 'deploy:setup', 'rvm:install_ruby'  # install Ruby and create gemset, or:
 before 'deploy:setup', 'rvm:create_gemset' # only create gemset
 
 namespace :deploy do
+
   desc "Start application"
   task :start do
     run("cd #{current_path} && bundle exec rake start")
