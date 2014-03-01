@@ -5,8 +5,9 @@ def exports
 end
 
 task :start do
-  system("#{exports} bundle exec thin -o 9393 start -d -l #{Archivos.log_dir}/thin.log") # start api
-  system("#{exports} bundle exec sidekiq -v -C config/sidekiq.yml -r ./initialize.rb -L #{Archivos.log_dir}/sidekiq.log -P #{Archivos.pid_dir}/sidekiq.pid -d") # start sidekiq
+  puts "Starting archivos in #{Archivos.env}"
+  system("bundle exec thin -o 9393 start -d -l #{Archivos.log_dir}/thin.log") # start api
+  system("bundle exec sidekiq -v -C config/sidekiq.yml -r ./initialize.rb -L #{Archivos.log_dir}/sidekiq.log -P #{Archivos.pid_dir}/sidekiq.pid -d") # start sidekiq
 end
 
 task :stop do
