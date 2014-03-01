@@ -9,7 +9,19 @@ module Archivos
     end
 
     def database_config
-      root + "/config/mongoid.yml"
+      Archivos.root + "/config/mongoid.yml"
+    end
+
+    def pid_dir
+      tmp_dir + "/pids"
+    end
+
+    def tmp_dir
+      Archivos.root + "/tmp"
+    end
+
+    def log_dir
+      Archivos.root + "/log"
     end
   end
 end
