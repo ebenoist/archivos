@@ -23,8 +23,9 @@ window.OrderListView = Backbone.View.extend({
 
     _.each(this.collection.models, function(order) {
      var html = _.template($(self.template).html(), { order: order });
-     console.log(order.toJSON());
       $(self.el).append(html);
+
+      new OrderLineItemEditView({ "model": order });
     });
 
     return this;

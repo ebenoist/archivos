@@ -30,6 +30,55 @@ window.CustomerFormView = Backbone.View.extend({
   }
 });
 
+window.OrderLineItemEditView = Backbone.View.extend({
+  events: {
+    "click": "toggleEdit"
+  },
+
+  el: function() {
+    return "#order-line-" + this.model.get("_id");
+  },
+
+  swapDatePicker: function() {
+    var dateEl = $(this.el).find("#delivery-date");
+    var fullDate = new Date(this.model.get("delivery_date"));
+    var simpleDate = fullDate.toISOString().slice(0,10);
+    var newInput = "<input value='" + simpleDate + "' type='date' id='delivery-date'/>"
+    dateEl.html(newInput);
+  },
+
+  toggleEdit: function() {
+    this.undelegateEvents();
+    this.edit();
+  },
+
+  edit: function(event) {
+    this.swapDatePicker();
+    $(this.el).find("#edit-controls").hide();
+    $(this.el).find("#save-" + this.model.get("_id")).toggleClass("hidden");
+
+    new OrderLineItemSaveView({ "parentDiv": $(this.el), "model": this.model });
+  },
+});
+
+window.OrderLineItemSaveView = Backbone.View.extend({
+  initialize: function(data) {
+    $(this.el).click(this.save());
+  },
+
+  el: function() {
+    if (this.parentDiv != null) {
+      this.parentDiv.find("#save-" + this.model.get("_id"));
+    }
+  },
+
+  save: function() {
+    var newDate = $(this.el).find("#delivery-date").value();
+    this.model.set("delivery_date", newDate);
+    this.model.save();
+  }
+})
+
 window.OrderFormView = Backbone.View.extend({
   el: $("#order-form-submit"),
   form: $("#order-form"),

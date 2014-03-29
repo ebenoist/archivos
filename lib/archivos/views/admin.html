@@ -162,15 +162,18 @@
   </script>
 
   <script type="text/template" id="order-view-list-template">
-    <tr>
-      <td><%= order.get("order_code") %></td>
-      <td><%= order.get("package") %></td>
-      <td><%= order.get("delivery_date") %></td>
-      <td><%= order.get("customer_name") %></td>
+      <tr class="order-line" id="order-line-<%= order.get("_id") %>">
+      <td id="order-code"><%= order.get("order_code") %></td>
+      <td id="order-package"><%= order.get("package") %></td>
+      <td id="delivery-date"><%= order.get("delivery_date") %></td>
+      <td id="customer-name"><%= order.get("customer_name") %></td>
       <td>
-        <span class="glyphicon glyphicon-pencil warning"></span>
-        |
-        <span class="glyphicon glyphicon-trash danger"></span>
+        <div id="edit-controls">
+          <span class="glyphicon glyphicon-pencil warning" id="edit-<%= order.get("_id") %>"></span>
+          |
+          <span class="glyphicon glyphicon-trash danger" id="destroy-<%= order.get("_id") %>"></span>
+        </div>
+        <span class="glyphicon glyphicon-floppy-disk success save-button hidden" id="save-<%= order.get("_id") %>"></span>
       </td>
     </tr>
   </script>
