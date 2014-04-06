@@ -121,3 +121,26 @@ body {
 .danger {
   color: #d9534f;
 }
+
+.uploaded:after {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit;
+  content: '\f00c';
+  padding-left: 1em;
+}
+
+.uploading:after {
+  animation: spin 2s infinite linear;
+  -webkit-animation: spin 2s infinite linear;
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit;
+  text-align: center;
+  content: '\f110';
+  margin-left: 1em;
+}

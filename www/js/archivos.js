@@ -2,11 +2,11 @@ window.Archivo = Backbone.Model.extend({
   idAttribute: "_id",
   urlRoot: "/v1/archivos",
 
-  file_name: function() {
+  status: function() {
     if (this._uploaded()) {
-      return this._file_name_as_link();
+      return "uploaded";
     } else {
-      return this.get("file_name");
+      return "uploading";
     }
   },
 
@@ -16,10 +16,6 @@ window.Archivo = Backbone.Model.extend({
     } else {
       return false;
     }
-  },
-
-  _file_name_as_link: function() {
-    return "<a href=\"" + this.get("public_uri") + "\">" + this.get("file_name") + "</a>";
   }
 });
 

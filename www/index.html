@@ -91,7 +91,7 @@
   </body>
 
   <script type="text/template" id="upload-list-template">
-    <td><%= archivo.file_name() %></td>
+<td><div class="<%= archivo.status() %>"><%= archivo.get("file_name") %></div></td>
   </script>
   <script src="/js/helpers.js"></script>
   <script src="/js/orders.js"></script>
