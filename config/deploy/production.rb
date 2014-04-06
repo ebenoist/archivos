@@ -1,7 +1,8 @@
 set :stage, :production
+
 set :default_environment, {
   'ENV' => "production",
   'PATH' => "$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"
 }
-role :app, "deploy@archivos.erikbenoist.com"
 
+role :app, "deploy@archivos.erikbenoist.com"

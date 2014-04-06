@@ -13,7 +13,7 @@ set :log_level, :debug
 
 set :deploy_via, :remote_cache
 set :linked_files, %w{config/aws.yml}
-set :linked_dirs, %w{log tmp/pids tmp/uploads}
+set :shared_children, %w{log tmp/pids tmp/uploads}
 set :keep_releases, 5
 set :user, "deploy"
 set :use_sudo, false

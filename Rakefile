@@ -11,6 +11,6 @@ task :start do
 end
 
 task :stop do
-  system("bundle exec thin -o 9393 stop; true") # stop api
+  system("bundle exec thin -o 8888 stop; true") # stop api
   system("bundle exec sidekiqctl stop #{Archivos.pid_dir}/sidekiq.pid 60")
 end
