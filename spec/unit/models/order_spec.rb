@@ -31,4 +31,11 @@ describe Order do
     order_json = order.as_json
     expect(order_json[:customer_name]).to be_nil
   end
+
+  it "previews" do
+    order = Order.create
+    preview = order.archivos.create({ preview: true })
+
+    expect(order.previews.first).to eq(preview)
+  end
 end

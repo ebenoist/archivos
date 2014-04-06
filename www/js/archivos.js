@@ -1,6 +1,6 @@
-window.Media = Backbone.Model.extend({
+window.Archivo = Backbone.Model.extend({
   idAttribute: "_id",
-  urlRoot: "/v1/media",
+  urlRoot: "/v1/archivos",
 
   file_name: function() {
     if (this._uploaded()) {
@@ -23,27 +23,27 @@ window.Media = Backbone.Model.extend({
   }
 });
 
-window.MediaList = Backbone.Collection.extend({
-  model: Media,
+window.ArchivoList = Backbone.Collection.extend({
+  model: Archivo,
 
   initialize: function(data) {
-    this.url = "/v1/media?order_code=" + data.order_code;
+    this.url = "/v1/archivos?order_code=" + data.order_code;
   },
 })
 
-window.MediaView = Backbone.View.extend({
+window.ArchivoView = Backbone.View.extend({
   tagName: 'tr',
 
   initialize: function() {
   },
 
   render: function(eventName) {
-    $(this.el).html(_.template($("#upload-list-template").html(), { media: this.model }));
+    $(this.el).html(_.template($("#upload-list-template").html(), { archivo: this.model }));
     return this;
   }
 });
 
-window.MediaListView = Backbone.View.extend({
+window.ArchivoListView = Backbone.View.extend({
   el: $("#upload-file-list"),
 
   initialize: function() {
@@ -51,12 +51,10 @@ window.MediaListView = Backbone.View.extend({
     $(".upload-file-list").show();
 
     this.$el.empty()
-    console.log(this.collection);
     var self = this;
 
     this.collection.on("add", function(model) {
-      console.log("adding" + model.toJSON());
-      $(self.el).append(new MediaView({ model: model }).render().el);
+      $(self.el).append(new ArchivoView({ model: model }).render().el);
     });
   },
 });

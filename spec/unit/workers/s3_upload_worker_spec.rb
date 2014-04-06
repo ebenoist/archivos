@@ -4,11 +4,11 @@ describe S3UploadWorker do
   before(:each) do
     Sidekiq::Testing.inline!
 
-    @media = Media.new
-    @media.save!
+    @archivo = Archivo.new
+    @archivo.save!
 
     @file_fixture = Archivos.root + "/spec/fixtures/image_one.jpg"
-    @job_description = { id: @media.id.to_s, order_code: "foo", file: @file_fixture, file_name: "bar.jpg" }
+    @job_description = { id: @archivo.id.to_s, order_code: "foo", file: @file_fixture, file_name: "bar.jpg" }
 
     @s3_object = double(:s3_object, { public_url: "foo.local/image.img" })
     S3Client.stub(:upload_file!).and_return(@s3_object)
@@ -29,15 +29,15 @@ describe S3UploadWorker do
     S3UploadWorker.perform_async(@job_description)
   end
 
-  it "adds the public uri to the media object after uploading" do
+  it "adds the public uri to the archivo object after uploading" do
     uri = URI("http://amazonsupr.internet.com/my-pixs.jpg")
     s3_object = double(:s3_object, { public_url: uri })
     S3Client.stub(:upload_file!).and_return(s3_object)
 
     S3UploadWorker.perform_async(@job_description)
 
-    @media.reload
-    expect(@media.public_uri).to eq(uri.to_s)
+    @archivo.reload
+    expect(@archivo.public_uri).to eq(uri.to_s)
   end
 end
 

@@ -11,9 +11,14 @@ class Order
   field :order_code, type: String
 
   belongs_to :customer
+  has_many :archivos
 
   def to_json
     as_json.to_json
+  end
+
+  def previews
+    archivos.where({ preview: true })
   end
 
   def as_json(options = nil)

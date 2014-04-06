@@ -31,7 +31,7 @@
           </div>
         </div>
 
-        <form class="form-horizontal" id="main" action="v1/media" method="POST" enctype="multipart/form-data">
+        <form class="form-horizontal" id="main" action="v1/archivos" method="POST" enctype="multipart/form-data">
           <fieldset>
             <legend>Your Order</legend>
 
@@ -73,7 +73,7 @@
         <div class="upload-file-list">
           <table class="table table-striped table-condensed">
             <thead>
-              <tr><th class="col-sm-6">File Name</th><th>Order Code</th></tr>
+              <tr><th class="col-sm-6">File Name</th></tr>
             </thead>
             <tbody id="upload-file-list">
             </tbody>
@@ -91,12 +91,11 @@
   </body>
 
   <script type="text/template" id="upload-list-template">
-    <td><%= media.file_name() %></td>
-    <td><%= media.get("order_code") %></td>
+    <td><%= archivo.file_name() %></td>
   </script>
   <script src="/js/helpers.js"></script>
   <script src="/js/orders.js"></script>
-  <script src="/js/media.js"></script>
+  <script src="/js/archivos.js"></script>
   <script src="/js/main.js"></script>
   <script type="text/javascript">
     window.app = new ArchivosRouter();

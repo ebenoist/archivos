@@ -1,4 +1,4 @@
-require "archivos/models/media"
+require "archivos/models/archivo"
 require "archivos/s3_client"
 
 class S3UploadWorker
@@ -7,8 +7,8 @@ class S3UploadWorker
   def perform(job)
     object = S3Client.upload_file!(job["file"], calculate_file_name(job))
 
-    media = Media.find(job["id"])
-    media.update_attributes({ public_uri: object.public_url.to_s })
+    archivo = Archivo.find(job["id"])
+    archivo.update_attributes({ public_uri: object.public_url.to_s })
   end
 
   def calculate_file_name(job)

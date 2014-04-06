@@ -18,28 +18,28 @@ describe "Archivos API" do
       file_one = Rack::Test::UploadedFile.new(fixture("image_one.jpg"), mime_type)
       file_two = Rack::Test::UploadedFile.new(fixture("image_two.jpg"), mime_type)
 
-      post "/v1/media", { order_code: order_code, files: [file_one, file_two] }
+      post "/v1/archivos", { order_code: order_code, files: [file_one, file_two] }
 
-      media_one = Media.where({ file_name: "image_one.jpg", order_code: order_code, mime: mime_type }).first
-      media_two = Media.where({ file_name: "image_two.jpg", order_code: order_code, mime: mime_type }).first
+      archivo_one = Archivo.where({ file_name: "image_one.jpg", order_code: order_code, mime: mime_type }).first
+      archivo_two = Archivo.where({ file_name: "image_two.jpg", order_code: order_code, mime: mime_type }).first
 
-      expect(media_one).to_not be_nil
-      expect(media_two).to_not be_nil
+      expect(archivo_one).to_not be_nil
+      expect(archivo_two).to_not be_nil
     end
 
     it "kicks off a background process to upload to s3" do
       order_code = UUID.generate
       file = Rack::Test::UploadedFile.new(fixture("image_two.jpg"), "image/jpg")
 
-      post "/v1/media", { order_code: order_code, files: [file] }
+      post "/v1/archivos", { order_code: order_code, files: [file] }
 
       fixture_contents = File.open(fixture("image_two.jpg"), "rb") { |io| io.read }
 
-      media = Media.create!
-      Media.stub(:create!).with(hash_including({ order_code: order_code })).and_return(media)
+      archivo = Archivo.create!
+      Archivo.stub(:create!).with(hash_including({ order_code: order_code })).and_return(archivo)
 
       S3UploadWorker.should_receive(:perform_async).with do |file|
-        expect(file[:id]).to eq(media.id.to_s)
+        expect(file[:id]).to eq(archivo.id.to_s)
         expect(file[:file_name]).to eq("image_two.jpg")
         expect(file[:order_code]).to eq(order_code)
 
@@ -47,7 +47,7 @@ describe "Archivos API" do
         expect(file_contents).to eq(fixture_contents)
       end
 
-      post "/v1/media", { order_code: order_code, files: [file] }
+      post "/v1/archivos", { order_code: order_code, files: [file] }
     end
 
     it "redirects to the index if accept is html and order_code is set" do
@@ -55,7 +55,7 @@ describe "Archivos API" do
 
       file = Rack::Test::UploadedFile.new(fixture("image_two.jpg"), "image/jpg")
       order_code = "foo"
-      post "/v1/media", { order_code: order_code, files: [file] }
+      post "/v1/archivos", { order_code: order_code, files: [file] }
       follow_redirect!
 
       expect(last_request.url).to eq("http://example.org/?order_code=#{order_code}")
@@ -63,40 +63,40 @@ describe "Archivos API" do
   end
 
   context "GET" do
-    it "gets all the media" do
-      media_one = Media.new({ file_name: "one.jpg" })
-      media_two = Media.new({ file_name: "two.jpg" })
+    it "gets all the archivo" do
+      archivo_one = Archivo.new({ file_name: "one.jpg" })
+      archivo_two = Archivo.new({ file_name: "two.jpg" })
 
-      media_one.save!
-      media_two.save!
+      archivo_one.save!
+      archivo_two.save!
 
-      get "/v1/media"
+      get "/v1/archivos"
 
-      expect(last_response.body).to eq([media_one, media_two].to_json)
+      expect(last_response.body).to eq([archivo_one, archivo_two].to_json)
     end
 
-    it "only returns the medias that match the order code" do
+    it "only returns the archivos that match the order code" do
       id = UUID.generate
-      media_one = Media.new({ order_code: id, file_name: "one.jpg" })
-      media_two = Media.new({ order_code: UUID.generate, file_name: "two.jpg" })
+      archivo_one = Archivo.new({ order_code: id, file_name: "one.jpg" })
+      archivo_two = Archivo.new({ order_code: UUID.generate, file_name: "two.jpg" })
 
-      media_one.save!
-      media_two.save!
+      archivo_one.save!
+      archivo_two.save!
 
-      get "/v1/media", { order_code: id }
+      get "/v1/archivos", { order_code: id }
 
-      expect(last_response.body).to eq([media_one].to_json)
+      expect(last_response.body).to eq([archivo_one].to_json)
     end
 
     it "gets an individual record" do
-      media_one = Media.new({ file_name: "one.jpg" })
+      archivo_one = Archivo.new({ file_name: "one.jpg" })
 
-      media_one.save!
-      id = media_one.id.to_s
+      archivo_one.save!
+      id = archivo_one.id.to_s
 
-      get "/v1/media/#{id}"
+      get "/v1/archivos/#{id}"
 
-      expect(last_response.body).to eq(media_one.to_json)
+      expect(last_response.body).to eq(archivo_one.to_json)
     end
   end
 

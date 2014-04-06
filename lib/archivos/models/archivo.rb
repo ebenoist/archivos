@@ -1,6 +1,6 @@
 require "archivos/models/order"
 
-class Media
+class Archivo
   include Mongoid::Document
   include Mongoid::Timestamps
 
@@ -10,6 +10,7 @@ class Media
   field :created_at, type: DateTime
   field :updated_at, type: DateTime
   field :mime, type: String
+  field :preview, type: Boolean
 
   belongs_to :order
 end

@@ -10,9 +10,9 @@ window.OrderCodeView = Backbone.View.extend({
     var order = this.collection.findWhere({ order_code: order_code });
 
     if (order != null) {
-      var mediaList = new MediaList({ order_code: order.get("order_code") });
-      var mediaListView = new MediaListView({ collection: mediaList });
-      mediaList.fetch();
+      var archivoList = new ArchivoList({ order_code: order.get("order_code") });
+      var archivoListView = new ArchivoListView({ collection: archivoList });
+      archivoList.fetch();
 
       this.formGroup.toggleClass("has-success");
       this.feedBack.text("Welcome back!");
