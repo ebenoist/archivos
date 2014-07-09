@@ -1,4 +1,4 @@
-window.Archivo = Backbone.Model.extend({
+App.Archivo = Backbone.Model.extend({
   idAttribute: "_id",
   urlRoot: "/v1/archivos",
 
@@ -19,19 +19,16 @@ window.Archivo = Backbone.Model.extend({
   }
 });
 
-window.ArchivoList = Backbone.Collection.extend({
-  model: Archivo,
+App.ArchivoList = Backbone.Collection.extend({
+  model: App.Archivo,
 
   initialize: function(data) {
     this.url = "/v1/archivos?order_code=" + data.order_code;
   },
 })
 
-window.ArchivoView = Backbone.View.extend({
+App.ArchivoView = Backbone.View.extend({
   tagName: 'tr',
-
-  initialize: function() {
-  },
 
   render: function(eventName) {
     $(this.el).html(_.template($("#upload-list-template").html(), { archivo: this.model }));
@@ -39,7 +36,7 @@ window.ArchivoView = Backbone.View.extend({
   }
 });
 
-window.ArchivoListView = Backbone.View.extend({
+App.ArchivoListView = Backbone.View.extend({
   el: $("#upload-file-list"),
 
   initialize: function() {
@@ -47,10 +44,10 @@ window.ArchivoListView = Backbone.View.extend({
     $(".upload-file-list").show();
 
     this.$el.empty()
-    var self = this;
+    self = this;
 
     this.collection.on("add", function(model) {
-      $(self.el).append(new ArchivoView({ model: model }).render().el);
+      $(self.el).append(new App.ArchivoView({ model: model }).render().el);
     });
   },
 });

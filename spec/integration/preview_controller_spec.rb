@@ -18,5 +18,3 @@ describe PreviewController do
     expect(json_response.first["order_id"]).to eq(preview.order_id.to_s)
   end
 end
-
-

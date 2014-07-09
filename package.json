@@ -1,0 +1,28 @@
+{
+  "name": "archivos",
+  "version": "0.0.0",
+  "description": "Archivos ======== ### Async S3 File Uploader Archivos provides a simple way to upload files to s3 while managing meta data in a local data store. Files are uploaded to the primary server which fires off a series of concurrent background tasks that handle the upload to Amazon's S3.",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "grunt": "^0.4.5"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-bower-concat": "^0.2.4",
+    "grunt-contrib-concat": "^0.4.0",
+    "grunt-contrib-watch": "^0.6.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ebenoist/archivos.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ebenoist/archivos/issues"
+  },
+  "homepage": "https://github.com/ebenoist/archivos"
+}

@@ -1,14 +1,14 @@
-window.Customer = Backbone.Model.extend({
+App.Customer = Backbone.Model.extend({
   idAttribute: "_id",
   urlRoot: "/v1/customer"
 });
 
-window.CustomerList = Backbone.Collection.extend({
-  model: Customer,
+App.CustomerList = Backbone.Collection.extend({
+  model: App.Customer,
   url: "/v1/customer"
 })
 
-window.CustomerListView = Backbone.View.extend({
+App.CustomerListView = Backbone.View.extend({
   el: "#customer-container",
 
   initialize: function() {
@@ -27,7 +27,7 @@ window.CustomerListView = Backbone.View.extend({
   }
 });
 
-window.CustomerEditListView = Backbone.View.extend({
+App.CustomerEditListView = Backbone.View.extend({
   template: "#customer-view-list-template",
   el: $("#customer-list-view"),
 
@@ -48,4 +48,3 @@ window.CustomerEditListView = Backbone.View.extend({
     return this;
   }
 });
-

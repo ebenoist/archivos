@@ -45,3 +45,9 @@ tags
 .rdebugrc
 bundler_bin/
 
+# js
+bower_components
+node_modules
+
+
+
